@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
@@ -69,21 +70,28 @@ export const login = async (req: Request, res: Response) => {
                 username
             }
         });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
         const passwordMatch = await bcrypt.compare(password, user.password); 
 
         if (!passwordMatch) {
             return res.status(401).json({ message: 'Invalid password' });
         }
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
+
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {
+            expiresIn: '24h' // Token expires in 1 hour
+        });
 
         return res.status(200).json({ 
             message: 'Login successful',
+            token,
             data: user
         });
 
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error' });
     }
-}
+};
