@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json()); // This is necessary to parse JSON request bodies
 
-const port = 3000;
+const port = process.env.PORT || 8000;
 
 app.use('/', homeRoutes);
 app.use('/auth', authenticationRoutes);
