@@ -3,11 +3,13 @@ import homeRoutes from './routes/homeRoutes';
 import authenticationRoutes from './routes/authenticationRoutes';
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
+import cors from 'cors';
 
 const prisma = new PrismaClient();
 
 const app = express();
 app.use(express.json()); // This is necessary to parse JSON request bodies
+app.use(cors());
 
 const port = process.env.PORT || 8000;
 
