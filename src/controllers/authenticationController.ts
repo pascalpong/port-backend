@@ -1,16 +1,25 @@
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Serials } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-export const checkSerial = (req: Request, res: Response) => {
+export const checkSerial = async (req: Request, res: Response) => {
     try { 
         const { serial } = req.body;
-        if (serial === '123456') {
-            return res.status(200).json({ message: 'Serial is valid' });
+        const result = await prisma.serials.findUnique({
+            where: {
+                serial
+            }
+        }) as Serials;
+        if (result) {
+            const token = jwt.sign({ data: result }, process.env.JWT_SECRET as string, { expiresIn: '24h' }) 
+            return res.status(200).json({
+                data: { ...result, token }, 
+                message: 'Serial is valid' 
+            });
         } else {
             return res.send('Serial is invalid');
         }
