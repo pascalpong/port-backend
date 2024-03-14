@@ -21,10 +21,12 @@ export const checkSerial = async (req: Request, res: Response) => {
                 message: 'Serial is valid' 
             });
         } else {
-            return res.send('Serial is invalid');
+            return res.status(404).json({
+                data: { token: null }, 
+                message: 'Serial is invalid' 
+            });
         }
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ message: 'Internal server error' });
     }
 }
