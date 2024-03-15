@@ -22,11 +22,12 @@ export const createProjects = async(req: RequestWithUser, res: Response) => {
         const creatingProjects = req.body;
 
         creatingProjects.map((project: Projects) => {
-            const { title, type, technologies, deployment, database, username, password } = project; 
+            const { title, type, technologies, deployment, database, username, password, url } = project; 
             const data = {
                 title, 
                 userId: req.user?.id, 
                 type, 
+                url, 
                 technologies: JSON.stringify(technologies), 
                 deployment: JSON.stringify(deployment), 
                 database: JSON.stringify(database), 

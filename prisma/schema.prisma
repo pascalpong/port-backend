@@ -44,6 +44,7 @@ model Projects {
   technologies String?
   deployment   String?
   database     String?
+  url     String?
   username     String?
   password     String?
 
