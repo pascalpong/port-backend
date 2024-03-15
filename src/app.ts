@@ -1,6 +1,7 @@
 import express from 'express';
 import homeRoutes from './routes/homeRoutes';
 import authenticationRoutes from './routes/authenticationRoutes';
+import projectRoutes from './routes/projectRoutes';
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
@@ -14,7 +15,8 @@ app.use(cors());
 const port = process.env.PORT || 8000;
 
 app.use('/', homeRoutes);
-app.use('/auth', authenticationRoutes);
+app.use('/project', projectRoutes);
+app.use('/auth', authenticationRoutes); 
 
 app.listen(port, async () => {
     console.log('Starting server...');

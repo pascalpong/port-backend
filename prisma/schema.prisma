@@ -14,16 +14,40 @@ datasource db {
 }
 
 model Users {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
-  name      String?
-  username  String  @unique
-  password  String
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  name     String?
+  username String  @unique
+  password String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model Serials {
-  id        Int     @id @default(autoincrement())
-  user_id   Int
-  serial    String  @unique
-  receiver  String
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  serial   String @unique
+  receiver String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Projects {
+  id           Int     @id @default(autoincrement())
+  userId       Int
+  title        String
+  type         String
+  technologies String?
+  deployment   String?
+  database     String?
+  username     String?
+  password     String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }

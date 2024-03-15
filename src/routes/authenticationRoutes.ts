@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/serial', checkSerial);
 router.post('/serial/create', authentication, generateSerial);
-router.post('/user/create', authentication, createUser);
+router.post('/user/create', createUser);
 router.post('/login', login);
 
 export default router;

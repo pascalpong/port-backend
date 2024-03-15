@@ -33,13 +33,13 @@ export const checkSerial = async (req: Request, res: Response) => {
 
 export const generateSerial = async (req: Request, res: Response) => {
     try {
-        const { user_id, receiver } = req.body;
+        const { userId, receiver } = req.body;
         const serial = uuidv4();
 
         const serialInfo = await prisma.serials.create({
             data: {
                 serial,
-                user_id,
+                userId,
                 receiver
             }
         });
